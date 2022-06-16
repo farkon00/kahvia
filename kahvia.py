@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import src.tokeniser as tk
 
 def version():
     print("[VERSION INFORMATION]")
@@ -13,14 +14,15 @@ def usage():
     print("    -v, --version    Print the version information.")
     print("    -h, --help       Print this message to stdout.")
 
-def error(err_msg):
+def error(err_msg, print_usage=True):
     print(f"kahvia: [ERROR] {err_msg}.")
-    usage()
+    if print_usage:
+        usage()
     exit(1)
 
 if __name__ == "__main__":
     sys.argv = sys.argv[1:]
-    inp_file = ""f
+    inp_file = ""
     flags = [] # This array will be appended to for each flag that doesn't halt execution (currently -h and -v)
     for (i, argument) in enumerate(sys.argv):
         if argument[0] == '-':
@@ -38,7 +40,7 @@ if __name__ == "__main__":
             if inp_file == "":
                 inp_file = argument
             else:
-                error("Too many files provided. Only one input file may be supplied")
+                error("Too many files provided. Only one input file may be supplied", False)
 
     # We have the input file now :D
-    print(inp_file)
+    print(tk.tokenise_file(inp_file))
