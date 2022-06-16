@@ -48,4 +48,5 @@ if __name__ == "__main__":
                 error("Too many files provided. Only one input file may be supplied", False)
 
     # We have the input file now :D
-    print(tk.tokenise_file(inp_file))
+    for token in tk.tokenise_file(inp_file):
+        print(f"Token: {token.typ} {token.val}")
