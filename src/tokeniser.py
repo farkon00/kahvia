@@ -1,10 +1,12 @@
 import kahvia
+from src.tokentype import Token, TokenType
 
 # Tokeniser
 
 def tokenise_file(file_path):
     # TODO
     file_contents = []
+    tokens = []
     try:
         with open(file_path, 'r') as f:
             file_contents = [line.strip() for line in f.readlines()]
@@ -17,4 +19,4 @@ def tokenise_file(file_path):
     except:
         kahvia.error(f"Unknown error reading the file `{file_path}`", False)
 
-    return file_contents
+    return tokens
