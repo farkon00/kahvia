@@ -1,9 +1,9 @@
 from enum import Enum
 
 class Token():
-    def __init__(typ, val=''):
-        self.typ = typ
-        self.val = val
+    def __init__(self, typ: TokenType, val: str=''):
+        self.typ: TokenType = typ
+        self.val: str = val
 
 class TokenType(Enum):
     IDENTIFIER = 0

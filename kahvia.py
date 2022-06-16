@@ -3,18 +3,20 @@
 import sys
 import src.tokeniser as tk
 
-def version():
+from typing import List
+
+def version() -> None:
     print("[VERSION INFORMATION]")
     print("    kahvia v0.0.1-alpha")
 
-def usage():
+def usage() -> None:
     print("[USAGE]")
     print("    ./kahvia.py <flags> [input file]")
     print("[FLAGS]")
     print("    -v, --version    Print the version information.")
     print("    -h, --help       Print this message to stdout.")
 
-def error(err_msg, print_usage=True):
+def error(err_msg: str, print_usage: bool=True) -> None:
     print(f"kahvia: [ERROR] {err_msg}.")
     if print_usage:
         usage()
@@ -22,8 +24,8 @@ def error(err_msg, print_usage=True):
 
 if __name__ == "__main__":
     sys.argv = sys.argv[1:]
-    inp_file = ""
-    flags = [] # This array will be appended to for each flag that doesn't halt execution (currently -h and -v)
+    inp_file: str = ""
+    flags: List[str] = [] # This array will be appended to for each flag that doesn't halt execution (currently -h and -v)
     for (i, argument) in enumerate(sys.argv):
         if argument[0] == '-':
             # Flags

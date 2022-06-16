@@ -1,12 +1,13 @@
 import kahvia
 from src.tokentype import Token, TokenType
+from typing import List
 
 # Tokeniser
 
-def tokenise_file(file_path):
+def tokenise_file(file_path: str) -> List[TokenType]:
     # TODO
-    file_contents = []
-    tokens = []
+    file_contents: List[str] = []
+    tokens: List[TokenType] = []
     try:
         with open(file_path, 'r') as f:
             file_contents = [line.strip() for line in f.readlines()]
