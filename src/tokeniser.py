@@ -5,6 +5,7 @@ from typing import List, Tuple
 # Tokeniser
 
 col = row = char = 0
+file_path = ""
 
 def exists_starts_with(arr, to_search: str, ignore_exact_match: bool=True):
     for to_check in arr:
@@ -16,9 +17,9 @@ def exists_starts_with(arr, to_search: str, ignore_exact_match: bool=True):
     return False
 
 def get_next_token(current_line: str) -> Tuple[str, Token]:
-    global col, char, row
+    global col, char, row, file_path
     current_token: str = ""
-    col = 0
+    
     next_token: Token = None
     in_string: bool = False
     
@@ -62,15 +63,16 @@ def get_next_token(current_line: str) -> Tuple[str, Token]:
             elif not current_line[i + 1].isalpha():
                 next_token = Token(TokenType.IDENTIFIER, current_token)
         else:
-            print("UNKNOWN: " + current_token + " at " + str(row))
+            kahvia.error("Unexpected token: " + current_token + " at " + file_path + ":" + str(row) + ":" + str(col))
             exit(1)
 
         if next_token is not None:
             return (current_line[i + 1:], next_token)
 
 def tokenise_line(line: str) -> List[Token]:
-    global row
+    global row, col
     row += 1
+    col = 0
     line_tokens: List[Token] = []
     while not line.strip() == "":
         next_tok: Token
@@ -78,12 +80,13 @@ def tokenise_line(line: str) -> List[Token]:
         line_tokens.append(next_tok)
     return line_tokens
         
-def tokenise_file(file_path: str) -> List[Token]:
-    # TODO
+def tokenise_file(f_path: str) -> List[Token]:
+    global file_path
+    file_path = f_path
     file_contents: List[str] = []
     tokens: List[Token] = []
     try:
-        with open(file_path, 'r') as f:
+        with open(f_path, 'r') as f:
             file_contents = f.readlines()
     except FileNotFoundError:
         kahvia.error(f"The file `{file_path}` could not be found", False)
