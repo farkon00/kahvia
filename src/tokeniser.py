@@ -55,15 +55,24 @@ def get_next_token(current_line: str) -> Tuple[str, Token]:
                     next_token = Token(TokenRef.MULTI_SYMBOLS[current_token], current_token)
                     current_token = ""
         elif exists_starts_with(TokenRef.KEYWORDS, current_token, False):
-            if current_token in TokenRef.KEYWORDS:
+            if current_token in TokenRef.KEYWORDS and not i == len(current_line) - 1:
+                if current_line[i + 1].isspace():
+                    next_token = Token(TokenType.KEYWORD, current_token)
+                    current_token = ""
+            elif current_token in TokenRef.KEYWORDS:
                 next_token = Token(TokenType.KEYWORD, current_token)
         elif current_token.isalpha():
             if i == len(current_line) - 1:
                 next_token = Token(TokenType.IDENTIFIER, current_token)
             elif not current_line[i + 1].isalpha():
                 next_token = Token(TokenType.IDENTIFIER, current_token)
+        elif current_token.isnumeric():
+            if i == len(current_line) - 1:
+                next_token = Token(TokenType.INTEGER, current_token)
+            elif not current_line[i + 1].isnumeric():
+                next_token = Token(TokenType.INTEGER, current_token)
         else:
-            kahvia.error("Unexpected token: " + current_token + " at " + file_path + ":" + str(row) + ":" + str(col))
+            kahvia.error("Unexpected token: " + current_token + " at " + file_path + ":" + str(row) + ":" + str(col), False)
             exit(1)
 
         if next_token is not None:

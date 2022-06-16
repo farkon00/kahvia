@@ -12,6 +12,10 @@ class TokenType(Enum):
     CLOSEBRACKET = auto() # ), ], }
     ARGSEPARATE = auto() # , - Separates arguments in a procedure call/definition
     STRINGLITERAL = auto() # A string literal
+    CHILD = auto() # :: - Get the child of a parent
+    SET = auto() # = - Set a value to another
+    INTEGER = auto()
+
 
 class Token():
     def __init__(self, typ: TokenType, val: str=''):
@@ -27,12 +31,14 @@ class TokenRef():
         ')': TokenType.CLOSEBRACKET,
         '[': TokenType.OPENBRACKET,
         ']': TokenType.CLOSEBRACKET,
-        ',': TokenType.ARGSEPARATE
+        ',': TokenType.ARGSEPARATE,
+        '=': TokenType.SET
     }
 
     MULTI_SYMBOLS: Dict[str, TokenType] = {
         '->': TokenType.RETURNTYPE,
-        '//': TokenType.COMMENT
+        '//': TokenType.COMMENT,
+        '::': TokenType.CHILD
     }
 
-    KEYWORDS: List[str] = ["proc", "printfs", "void"]
+    KEYWORDS: List[str] = ["proc", "void", "import", "const", "int"]
