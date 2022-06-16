@@ -19,10 +19,10 @@ def exists_starts_with(arr, to_search: str, ignore_exact_match: bool=True):
 def get_next_token(current_line: str) -> Tuple[str, Token]:
     global col, char, row, file_path
     current_token: str = ""
-    
+
     next_token: Token = None
     in_string: bool = False
-    
+
     for (i, c) in enumerate(current_line):
         col += 1
         char += 1
@@ -37,7 +37,7 @@ def get_next_token(current_line: str) -> Tuple[str, Token]:
                 in_string = False
                 next_token = Token(TokenType.STRINGLITERAL, current_token)
                 current_token = ""
-                
+
         if in_string:
             continue
 
@@ -88,7 +88,7 @@ def tokenise_line(line: str) -> List[Token]:
         line, next_tok = get_next_token(line)
         line_tokens.append(next_tok)
     return line_tokens
-        
+
 def tokenise_file(f_path: str) -> List[Token]:
     global file_path
     file_path = f_path
@@ -110,5 +110,5 @@ def tokenise_file(f_path: str) -> List[Token]:
         if line == "":
             continue
         tokens.extend(tokenise_line(line))
-        
+
     return tokens
