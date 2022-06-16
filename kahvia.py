@@ -18,6 +18,7 @@ def usage() -> None:
 
 def error(err_msg: str, print_usage: bool=True) -> None:
     print(f"kahvia: [ERROR] {err_msg}.")
+    print()
     if print_usage:
         usage()
     exit(1)
@@ -26,6 +27,8 @@ if __name__ == "__main__":
     sys.argv = sys.argv[1:]
     inp_file: str = ""
     flags: List[str] = [] # This array will be appended to for each flag that doesn't halt execution (currently -h and -v)
+    if len(sys.argv) == 0:
+        error("No input file was provided")
     for (i, argument) in enumerate(sys.argv):
         if argument[0] == '-':
             # Flags
