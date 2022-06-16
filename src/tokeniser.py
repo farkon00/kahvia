@@ -1,14 +1,14 @@
 import kahvia
 import re
 from src.tokentype import Token, TokenType, TokenRef
-from typing import List, Tuple
+from typing import Iterable, List, Tuple
 
 # Tokeniser
 
 col = row = char = 0
 file_path = ""
 
-def exists_starts_with(arr, to_search: str, ignore_exact_match: bool=True):
+def exists_starts_with(arr: Iterable, to_search: str, ignore_exact_match: bool = True) -> bool:
     for to_check in arr:
         if to_check.startswith(to_search):
             if ignore_exact_match and not to_check == to_search:
@@ -17,14 +17,17 @@ def exists_starts_with(arr, to_search: str, ignore_exact_match: bool=True):
                 return True
     return False
 
+def get_current_loc() -> str:
+    return "{file_path}:{row}:{col}"
+
 def get_next_token(current_line: str) -> Tuple[str, Token]:
     global col, char, row, file_path
     current_token: str = ""
 
-    next_token: Token = None
+    next_token: Token | None = None
     in_string: bool = False
 
-    for (i, c) in enumerate(current_line):
+    for i, c in enumerate(current_line):
         col += 1
         char += 1
         if (c.isspace() or c == "\n") and not in_string:
@@ -73,8 +76,7 @@ def get_next_token(current_line: str) -> Tuple[str, Token]:
             elif not current_line[i + 1].isnumeric():
                 next_token = Token(TokenType.INTEGER, current_token)
         else:
-            kahvia.error("Unexpected token: " + current_token + " at " + file_path + ":" + str(row) + ":" + str(col), False)
-            exit(1)
+            kahvia.error(f"Unexpected token: {current_token} at {get_current_loc()}", False)
 
         if next_token is not None:
             return (current_line[i + 1:], next_token)
@@ -84,7 +86,7 @@ def tokenise_line(line: str) -> List[Token]:
     row += 1
     col = 0
     line_tokens: List[Token] = []
-    while not line.strip() == "":
+    while line.strip():
         next_tok: Token
         line, next_tok = get_next_token(line)
         line_tokens.append(next_tok)
@@ -104,11 +106,11 @@ def tokenise_file(f_path: str) -> List[Token]:
         kahvia.error(f"Your user does not have permission to read the file `{file_path}`", False)
     except ValueError:
         kahvia.error(f"There was an error reading the encoding of the file `{file_path}`", False)
-    except:
+    except Exception:
         kahvia.error(f"Unknown error reading the file `{file_path}`", False)
 
     for line in file_contents:
-        if line == "":
+        if not line:
             continue
         tokens.extend(tokenise_line(line))
 

@@ -26,6 +26,8 @@ def error(err_msg: str, print_usage: bool=True) -> None:
     if print_usage:
         usage(error=True)
 
+    exit(1)
+
 def main():
     args: List[str] = sys.argv[1:]
     inp_file: str = ""
