@@ -1,4 +1,5 @@
 import kahvia
+import re
 from src.tokentype import Token, TokenType, TokenRef
 from typing import List, Tuple
 
@@ -61,10 +62,10 @@ def get_next_token(current_line: str) -> Tuple[str, Token]:
                     current_token = ""
             elif current_token in TokenRef.KEYWORDS:
                 next_token = Token(TokenType.KEYWORD, current_token)
-        elif current_token.isalpha():
+        elif bool(re.search("^\w+$", current_token)):
             if i == len(current_line) - 1:
                 next_token = Token(TokenType.IDENTIFIER, current_token)
-            elif not current_line[i + 1].isalpha():
+            elif not (current_line[i + 1].isalpha() or current_line[i + 1] == '_'):
                 next_token = Token(TokenType.IDENTIFIER, current_token)
         elif current_token.isnumeric():
             if i == len(current_line) - 1:

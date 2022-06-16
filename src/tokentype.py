@@ -15,6 +15,7 @@ class TokenType(Enum):
     CHILD = auto() # :: - Get the child of a parent
     SET = auto() # = - Set a value to another
     INTEGER = auto()
+    TYPEANNOTATION = auto() # : - mark the type of a variable or argument
 
 
 class Token():
@@ -32,7 +33,8 @@ class TokenRef():
         '[': TokenType.OPENBRACKET,
         ']': TokenType.CLOSEBRACKET,
         ',': TokenType.ARGSEPARATE,
-        '=': TokenType.SET
+        '=': TokenType.SET,
+        ':': TokenType.TYPEANNOTATION
     }
 
     MULTI_SYMBOLS: Dict[str, TokenType] = {
