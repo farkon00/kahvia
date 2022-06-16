@@ -24,6 +24,9 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Mypy
+.mypy_cache/
+
 # Unit test / coverage reports
 .tox/
 .coverage
