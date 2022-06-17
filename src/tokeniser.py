@@ -9,7 +9,7 @@ Tokeniser
 
 class Tokeniser:
     """
-    Tokeniser for kahvia language
+    Tokeniser Class
     """
 
     def __init__(self, f_path: str):
@@ -83,7 +83,7 @@ class Tokeniser:
                 elif not current_line[i + 1].isnumeric():
                     next_token = Token(TokenType.INTEGER, current_token)
             else:
-                kahvia.error(f"Unexpected token: {current_token} at {self.get_current_loc()}", False)
+                kahvia.error(f"Unexpected token: {c} at {self.get_current_loc()}", False)
 
             if next_token is not None:
                 return current_line[i + 1:], next_token
