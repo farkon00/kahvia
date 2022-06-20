@@ -2,6 +2,7 @@
 
 import sys
 import src.tokeniser as tk
+import src.parser as parser
 
 from typing import List
 
@@ -51,8 +52,10 @@ def main():
                 error("Too many files provided. Only one input file may be supplied", False)
 
     # We have the input file now :D
-    for token in tk.Tokeniser(inp_file).tokenise_file():
+    tokens = tk.Tokeniser(inp_file).tokenise_file()
+    for token in tokens:
         print(f"Token: {token.typ} {token.val}")
+    ast = parser.Parser(tokens).parse_tokens()
 
 if __name__ == "__main__":
     main()
