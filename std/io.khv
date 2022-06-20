@@ -1,8 +1,3 @@
 const int STDIN=0;
 const int STDOUT=1;
 const int STDERR=2;
-
-proc printfs(int filestream, string str) -> void {
-     str_pointer: pointer = dbmove(str);
-     syscall(1, filesteam, str_pointer, strlen(str));
-}
