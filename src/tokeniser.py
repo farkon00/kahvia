@@ -26,7 +26,7 @@ class Tokeniser:
         return False
 
     def get_current_loc(self) -> str:
-        return "{self.file_path}:{self.row}:{self.col}"
+        return f"{self.file_path}:{self.row}:{self.col}"
 
     def get_next_token(self, current_line: str) -> Tuple[str, Token]:
         current_token: str = ""
