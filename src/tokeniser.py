@@ -67,12 +67,12 @@ class Tokeniser:
                         current_token = ""
             elif self.exists_starts_with(TokenRef.KEYWORDS, current_token, False):
                 if current_token in TokenRef.KEYWORDS and not i == len(current_line) - 1:
-                    if current_line[i + 1].isspace():
+                    if current_line[i + 1].isspace() or not current_line[i + 1].isalpha():
                         next_token = Token(TokenType.KEYWORD, current_token)
                         current_token = ""
                 elif current_token in TokenRef.KEYWORDS:
                     next_token = Token(TokenType.KEYWORD, current_token)
-            elif bool(re.search("^\w+$", current_token)):
+            elif bool(re.search("^[A-Za-z_]+$", current_token)):
                 if i == len(current_line) - 1:
                     next_token = Token(TokenType.IDENTIFIER, current_token)
                 elif not (current_line[i + 1].isalpha() or current_line[i + 1] == '_'):
