@@ -41,4 +41,4 @@ class Parser:
             current_token_index += 1
         print("Parsing finished successfully!")
         for var in self.vars:
-            print(var.name, var.value)
+            print(f"Variable: {var.name} = {var.value}")
