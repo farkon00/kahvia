@@ -53,8 +53,6 @@ def main():
 
     # We have the input file now :D
     tokens = tk.Tokeniser(inp_file).tokenise_file()
-    for token in tokens:
-        print(f"Token: {token.typ} {token.val}")
     ast = parser.Parser(tokens).parse_tokens()
 
 if __name__ == "__main__":

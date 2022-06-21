@@ -43,4 +43,4 @@ class TokenRef():
         '::': TokenType.CHILD
     }
 
-    KEYWORDS: List[str] = ["proc", "void", "import", "const", "int"]
+    KEYWORDS: List[str] = ["var", "proc", "void", "import", "const", "int"]
