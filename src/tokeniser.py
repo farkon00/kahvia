@@ -54,36 +54,36 @@ class Tokeniser:
 
             if current_token in TokenRef.SINGLE_SYMBOLS:
                 if not self.exists_starts_with(TokenRef.MULTI_SYMBOLS, current_token) or i == len(current_line) - 1:
-                    next_token = Token(TokenRef.SINGLE_SYMBOLS[current_token], current_token)
+                    next_token = Token(TokenRef.SINGLE_SYMBOLS[current_token], current_token, self.get_current_loc())
                     current_token = ""
                 else:
                     if not self.exists_starts_with(TokenRef.MULTI_SYMBOLS, current_token + current_line[i + 1], False):
-                        next_token = Token(TokenRef.SINGLE_SYMBOLS[current_token], current_token)
+                        next_token = Token(TokenRef.SINGLE_SYMBOLS[current_token], current_token, self.get_current_loc())
                         current_token = ""
             elif self.exists_starts_with(TokenRef.MULTI_SYMBOLS, current_token, False):
                 if current_token in TokenRef.MULTI_SYMBOLS and not i == len(current_line) - 1:
                     if not self.exists_starts_with(TokenRef.MULTI_SYMBOLS, current_token + current_line[i + 1], False):
-                        next_token = Token(TokenRef.MULTI_SYMBOLS[current_token], current_token)
+                        next_token = Token(TokenRef.MULTI_SYMBOLS[current_token], current_token, self.get_current_loc())
                         current_token = ""
             elif self.exists_starts_with(TokenRef.KEYWORDS, current_token, False):
                 if current_token in TokenRef.KEYWORDS and not i == len(current_line) - 1:
                     if current_line[i + 1].isspace() or not current_line[i + 1].isalpha():
-                        next_token = Token(TokenType.KEYWORD, current_token)
+                        next_token = Token(TokenType.KEYWORD, current_token, self.get_current_loc())
                         current_token = ""
                 elif current_token in TokenRef.KEYWORDS:
-                    next_token = Token(TokenType.KEYWORD, current_token)
+                    next_token = Token(TokenType.KEYWORD, current_token, self.get_current_loc())
             elif bool(re.search("^[A-Za-z_]+$", current_token)):
                 if i == len(current_line) - 1:
-                    next_token = Token(TokenType.IDENTIFIER, current_token)
+                    next_token = Token(TokenType.IDENTIFIER, current_token, self.get_current_loc())
                 elif not (current_line[i + 1].isalpha() or current_line[i + 1] == '_'):
-                    next_token = Token(TokenType.IDENTIFIER, current_token)
+                    next_token = Token(TokenType.IDENTIFIER, current_token, self.get_current_loc())
             elif current_token.isnumeric():
                 if i == len(current_line) - 1:
-                    next_token = Token(TokenType.INTEGER, current_token)
+                    next_token = Token(TokenType.INTEGER, current_token, self.get_current_loc())
                 elif not current_line[i + 1].isnumeric():
-                    next_token = Token(TokenType.INTEGER, current_token)
+                    next_token = Token(TokenType.INTEGER, current_token, self.get_current_loc())
             else:
-                kahvia.error(f"Unexpected token: {c} at {self.get_current_loc()}", False)
+                kahvia.error(f"\033[31;1mUnexpected token\033[0m: {c} at {self.get_current_loc()}", False)
 
             if next_token is not None:
                 return current_line[i + 1:], next_token

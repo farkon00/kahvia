@@ -19,9 +19,10 @@ class TokenType(Enum):
 
 
 class Token():
-    def __init__(self, typ: TokenType, val: str=''):
+    def __init__(self, typ: TokenType, val: str='', loc: str = ""):
         self.typ: TokenType = typ
         self.val: str = val
+        self.loc: str = loc
 
 class TokenRef():
     SINGLE_SYMBOLS: Dict[str, TokenType] = {
