@@ -7,3 +7,8 @@ __Kahvia__ is a (planned-to-be) compiled language, with a compiler written in [P
 ```console
 $ ./kahvia.py -h
 ```
+
+```
+var int a = 69
+var int b = 420
+```
