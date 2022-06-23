@@ -3,7 +3,7 @@ import kahvia
 
 def token_type_assert(token, type):
     if token.typ != type:
-        kahvia.error(f"Syntax Error: Expected {type} but got {token.typ}", False)
+        kahvia.error(f"\033[31;1mSyntax Error {token.loc}\033[0m: Expected {type.name} but got {token.typ.name}", False)
 
 def check_next_token(token, type):
     token_type_assert(token, type)
@@ -31,7 +31,7 @@ class Parser:
                     if variable_type == "int":
                         value = check_next_token(self.tokens[current_token_index], TokenType.INTEGER)
                     else:
-                        kahvia.error(f"Invalid variable type: {variable_type}", False)
+                        kahvia.error(f"Invalid variable type {self.tokens[current_token_index-2].loc}: {variable_type}", False)
                     self.vars[var_name] = value
             current_token_index += 1
         print("Parsing finished successfully!")
