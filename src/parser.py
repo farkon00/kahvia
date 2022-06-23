@@ -9,14 +9,9 @@ def check_next_token(token, type):
     token_type_assert(token, type)
     return token.val
 
-class Variable:
-    def __init__(self, name, value):
-        self.name = name
-        self.value = value  
-
 class Parser:
     def __init__(self, tokens):
-        self.vars = []
+        self.vars = {}
         self.tokens = tokens
     
     def parse_tokens(self):
@@ -37,8 +32,8 @@ class Parser:
                         value = check_next_token(self.tokens[current_token_index], TokenType.INTEGER)
                     else:
                         kahvia.error(f"Invalid variable type: {variable_type}", False)
-                    self.vars.append(Variable(var_name, value))
+                    self.vars[var_name] = value
             current_token_index += 1
         print("Parsing finished successfully!")
-        for var in self.vars:
-            print(f"Variable: {var.name} = {var.value}")
+        for name, value in self.vars.items():
+            print(f"Variable: {name} = {value}")
